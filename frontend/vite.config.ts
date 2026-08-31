@@ -1,11 +1,25 @@
-import react, { reactCompilerPreset } from '@vitejs/plugin-react'
-import babel from '@rolldown/plugin-babel'
-import { defineConfig } from 'vite'
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 
-// https://vite.dev/config/
+const frontendRoot = path.dirname(fileURLToPath(import.meta.url));
+
 export default defineConfig({
-  plugins: [
-    react(),
-    babel({ presets: [reactCompilerPreset()] })
-  ],
-})
+  root: frontendRoot,
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      tailwindcss: path.resolve(frontendRoot, 'node_modules/tailwindcss'),
+    },
+  },
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+  },
+  preview: {
+    host: '0.0.0.0',
+    port: 4173,
+  },
+});
