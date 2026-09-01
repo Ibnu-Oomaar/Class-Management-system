@@ -29,7 +29,7 @@ app.use("/api/class-impacts", classImpactRoutes);
 app.use("/api/disciplines", disciplineRoutes);
 app.use("/api/class-leaders", classLeaderRoutes);
 
-const port = process.env.PORT;
+const port = Number(process.env.PORT ?? 5030);
 
 
 app.listen(port, () => console.log(`server is listening on port ${port}`));

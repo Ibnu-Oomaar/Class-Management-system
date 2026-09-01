@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import {
   AlertTriangle,
   Award,
@@ -22,7 +22,7 @@ import {
   Clock,
 } from "lucide-react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 import { Button } from "../components/ui/button";
@@ -60,6 +60,22 @@ const navItems = [
   { id: "Competition Participant", label: "Participants", icon: UserCheck },
 ];
 
+const tabRoutes: Record<string, string> = {
+  students: "Student",
+  "class-leaders": "Class Leader",
+  achievements: "Achievement",
+  "discipline-cases": "Discipline Case",
+  "class-impacts": "Class Impact",
+  competitions: "Competition",
+  "competition-participants": "Competition Participant",
+};
+
+const tabSlugs: Record<string, string> = Object.fromEntries(
+  Object.entries(tabRoutes).map(([slug, tab]) => [tab, slug])
+);
+
+const emptyList: never[] = [];
+
 const roleLabels: Record<string, string> = {
   main_monitor: "Main Monitor",
   assistant_monitor: "Assistant Monitor",
@@ -80,12 +96,16 @@ const statusMap: Record<string, { label: string; color: string }> = {
 export default function DashboardLayout() {
   const user = useStudentStore((state) => state.user);
   const logout = useStudentStore((state) => state.logout);
-  const [activeTab, setActiveTab] = useState("Overview");
   const navigate = useNavigate();
+  const { "*": section } = useParams();
+  const activeTab = tabRoutes[section ?? ""] ?? "Overview";
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
+  const navigateToTab = (tab: string) => {
+    navigate(
+      tab === "Overview"
+        ? "/dashboard"
+        : `/dashboard/${tabSlugs[tab]}`
+    );
   };
   // Fetch real backend data for Dashboard metrics & lists
   const studentsQuery = useStudents(1, 100);
@@ -109,11 +129,11 @@ export default function DashboardLayout() {
   const classLeadersList = leadersQuery.data?.data ?? [];
   const leadersCount = leadersQuery.data?.count ?? classLeadersList.length;
 
-  const achievementsList = achievementsQuery.data?.data ?? [];
+  const achievementsList = achievementsQuery.data?.data ?? emptyList;
   const achievementsCount = achievementsQuery.data?.count ?? achievementsList.length;
   const totalPoints = achievementsList.reduce((sum, item) => sum + (item.points || 0), 0);
 
-  const disciplineCasesList = disciplineQuery.data?.data ?? [];
+  const disciplineCasesList = disciplineQuery.data?.data ?? emptyList;
   const disciplineCount = disciplineQuery.data?.count ?? disciplineCasesList.length;
   const pendingCriticalCases = disciplineCasesList.filter(
     (d) => d.severity === "critical" || d.severity === "high"
@@ -122,7 +142,7 @@ export default function DashboardLayout() {
   const competitionsList = competitionsQuery.data?.data ?? [];
   const upcomingCompetition = competitionsList.length > 0 ? competitionsList[0] : null;
 
-  const impactsList = impactsQuery.data?.data ?? [];
+  const impactsList = impactsQuery.data?.data ?? emptyList;
 
   // Generate dynamic weekly activity breakdown based on real data
   const chartData = useMemo(() => {
@@ -351,7 +371,7 @@ export default function DashboardLayout() {
                       <Button
                         size="sm"
                         variant="outline"
-                        onClick={() => setActiveTab("Competition")}
+                        onClick={() => navigateToTab("Competition")}
                         className="text-xs border-zinc-800 text-zinc-300 hover:bg-zinc-800"
                       >
                         Create Event
@@ -362,7 +382,7 @@ export default function DashboardLayout() {
 
                 <div className="mt-4 space-y-2">
                   <Button
-                    onClick={() => setActiveTab("Competition")}
+                    onClick={() => navigateToTab("Competition")}
                     className="w-full bg-[hsl(var(--brand))] hover:bg-[hsl(var(--brand))]/90 text-white rounded-lg shadow-md text-xs font-semibold h-9"
                   >
                     View All Competitions
@@ -383,7 +403,7 @@ export default function DashboardLayout() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => setActiveTab("Class Leader")}
+                    onClick={() => navigateToTab("Class Leader")}
                     className="text-xs text-[hsl(var(--brand))] hover:bg-[hsl(var(--brand))]/10 h-8"
                   >
                     Manage Council <ChevronRight className="h-3.5 w-3.5 ml-1" />
@@ -401,7 +421,7 @@ export default function DashboardLayout() {
                     <p className="text-xs text-zinc-400 mb-3">No class leaders registered in the backend yet.</p>
                     <Button
                       size="sm"
-                      onClick={() => setActiveTab("Class Leader")}
+                      onClick={() => navigateToTab("Class Leader")}
                       className="bg-[hsl(var(--brand))] text-white text-xs h-8 rounded-lg"
                     >
                       Assign First Leader
@@ -527,7 +547,13 @@ export default function DashboardLayout() {
               <button
                 key={item.id}
                 type="button"
-                onClick={() => setActiveTab(item.id)}
+                onClick={() =>
+                  navigate(
+                    item.id === "Overview"
+                      ? "/dashboard"
+                      : `/dashboard/${tabSlugs[item.id]}`
+                  )
+                }
                 className={[
                   "flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-left text-xs font-semibold transition-all duration-150",
                   isActive
@@ -599,7 +625,7 @@ export default function DashboardLayout() {
 
             <Button
               size="sm"
-              onClick={() => setActiveTab("Student")}
+                onClick={() => navigateToTab("Student")}
               className="bg-[hsl(var(--brand))] text-white hover:bg-[hsl(var(--brand))]/90 shadow-sm rounded-lg px-3.5 text-xs font-semibold h-8"
             >
               <Plus className="mr-1.5 h-3.5 w-3.5" />

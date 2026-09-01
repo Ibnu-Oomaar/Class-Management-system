@@ -831,7 +831,7 @@ export default function DisciplineCasePage() {
                           "
                         >
                           {/* TITLE */}
-                          <TableCell className="max-w-[280px]">
+                          <TableCell className="max-w-70">
                             <div className="font-medium text-zinc-200">
                               {item.title}
                             </div>

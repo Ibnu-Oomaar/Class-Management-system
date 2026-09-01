@@ -1,5 +1,11 @@
 import { useMemo, useState } from "react";
-import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  Navigate,
+} from "react-router-dom";
 import { Toaster } from "sonner";
 
 import { Button } from "./components/ui/button";
@@ -371,10 +377,6 @@ function AppContent() {
   );
 }
 
-function LoginRoute() {
-  return <LoginPage />;
-}
-
 function DashboardRoute() {
   return <Dashboard />;
 }
@@ -390,22 +392,16 @@ function AppRoutes() {
 
       <Route
         path="/login"
-        element={
-          isAuthenticated ? (
-            <NavigateToDashboard />
-          ) : (
-            <LoginRoute />
-          )
-        }
+        element={<LoginPage />}
       />
 
       <Route
-        path="/dashboard"
+        path="/dashboard/*"
         element={
           isAuthenticated ? (
             <DashboardRoute />
           ) : (
-            <NavigateToLogin />
+            <Navigate to="/login" replace />
           )
         }
       />
@@ -413,26 +409,6 @@ function AppRoutes() {
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
-}
-
-function NavigateToDashboard() {
-  const navigate = useNavigate();
-
-  useMemo(() => {
-    navigate("/dashboard", { replace: true });
-  }, [navigate]);
-
-  return null;
-}
-
-function NavigateToLogin() {
-  const navigate = useNavigate();
-
-  useMemo(() => {
-    navigate("/login", { replace: true });
-  }, [navigate]);
-
-  return null;
 }
 
 function NotFound() {
