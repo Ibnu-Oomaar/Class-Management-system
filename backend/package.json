@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec tsx src/server.ts"
+    "dev": "nodemon --exec tsx src/server.ts",
+    "build": "prisma generate",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",

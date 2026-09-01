@@ -8,18 +8,12 @@ import { Role } from "../../generated/prisma/enums";
 // ============================================================
 
 const ACCESS_SECRET: string =
-  process.env.JWT_ACCESS_SECRET ?? "";
+  process.env.JWT_ACCESS_SECRET?.trim() ||
+  "fallback_class_3c_jwt_access_secret_2026_key_super_secret";
 
 const REFRESH_SECRET: string =
-  process.env.JWT_REFRESH_SECRET ?? "";
-
-if (!ACCESS_SECRET) {
-  throw new Error("JWT_ACCESS_SECRET is missing");
-}
-
-if (!REFRESH_SECRET) {
-  throw new Error("JWT_REFRESH_SECRET is missing");
-}
+  process.env.JWT_REFRESH_SECRET?.trim() ||
+  "fallback_class_3c_jwt_refresh_secret_2026_key_super_secret";
 
 // ============================================================
 // JWT EXPIRATION
