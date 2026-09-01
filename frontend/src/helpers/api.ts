@@ -6,7 +6,7 @@ import type { InternalAxiosRequestConfig } from "axios";
 // ============================================================
 
 const API_URL =
-  import.meta.env.VITE_API_URL ?? "http://localhost:5030/api";
+  import.meta.env.VITE_API_URL ?? "http://localhost:5000/api";
 
 // ============================================================
 // AXIOS INSTANCE
