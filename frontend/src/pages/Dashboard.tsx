@@ -497,7 +497,7 @@ export default function DashboardLayout() {
   return (
     <div className="flex min-h-screen bg-zinc-950 text-zinc-100 font-sans antialiased selection:bg-[hsl(var(--brand))]/30">
       {/* Sidebar (Compact Medium Width) */}
-      <aside className="sticky top-0 flex h-screen w-64 flex-col border-r border-zinc-800/80 bg-zinc-900/60 backdrop-blur-2xl z-30">
+      <aside className="sticky top-0 flex h-auto max-h-screen w-full shrink-0 flex-col border-b border-zinc-800/80 bg-zinc-900/60 backdrop-blur-2xl md:h-screen md:w-64 md:border-b-0 md:border-r z-30">
         {/* Sidebar Brand Header */}
         <div className="flex h-16 items-center gap-3 border-b border-zinc-800/80 px-5">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-linear-to-br from-[hsl(var(--brand))] to-emerald-700 text-sm font-black text-white shadow-md shadow-[hsl(var(--brand))]/25">
@@ -538,8 +538,8 @@ export default function DashboardLayout() {
         <div className="mx-3.5 h-px bg-zinc-800/80" />
 
         {/* Sidebar Navigation Items */}
-        <nav className="flex-1 space-y-1 overflow-y-auto no-scrollbar px-3 py-3">
-          <p className="px-2.5 pb-1.5 text-[10px] font-bold tracking-wider text-zinc-500 uppercase">System Navigation</p>
+        <nav className="flex max-h-48 flex-1 gap-1 overflow-x-auto overflow-y-hidden no-scrollbar px-3 py-3 md:max-h-none md:block md:space-y-1">
+          <p className="hidden px-2.5 pb-1.5 text-[10px] font-bold tracking-wider text-zinc-500 uppercase md:block">System Navigation</p>
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -555,7 +555,7 @@ export default function DashboardLayout() {
                   )
                 }
                 className={[
-                  "flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-left text-xs font-semibold transition-all duration-150",
+                  "flex min-w-max items-center gap-2.5 rounded-lg px-3 py-2.5 text-left text-xs font-semibold transition-all duration-150 md:w-full md:min-w-0",
                   isActive
                     ? "bg-[hsl(var(--brand))] text-white shadow-md shadow-[hsl(var(--brand))]/25"
                     : "text-zinc-400 hover:bg-zinc-800/60 hover:text-zinc-100",
@@ -572,7 +572,7 @@ export default function DashboardLayout() {
         <div className="mx-3.5 h-px bg-zinc-800/80" />
 
         {/* Sidebar Footer Sign Out */}
-        <Button
+          <Button
   variant="ghost"
   onClick={() => {
     const confirmed = toast.warning(
@@ -586,7 +586,7 @@ export default function DashboardLayout() {
       });
     }
   }}
-  className="w-full justify-start text-xs font-semibold text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 rounded-lg h-9"
+  className="mx-3 mb-3 w-[calc(100%-1.5rem)] justify-start text-xs font-semibold text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 rounded-lg h-9 md:mx-0 md:mb-0 md:w-full"
 >
   <LogOut className="mr-2 h-4 w-4" />
   Sign Out
@@ -597,7 +597,7 @@ export default function DashboardLayout() {
       {/* Main Workspace Area */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Navbar Header (Compact Medium Height) */}
-        <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-zinc-800/80 bg-zinc-950/80 px-6 backdrop-blur-xl">
+        <header className="sticky top-0 z-20 flex min-h-16 flex-wrap items-center justify-between gap-3 border-b border-zinc-800/80 bg-zinc-950/80 px-4 py-3 backdrop-blur-xl md:px-6 md:py-0">
           <div>
             <h1 className="text-lg font-bold text-white tracking-tight">{activeTab}</h1>
             <p className="text-[11px] text-zinc-400">
@@ -635,7 +635,7 @@ export default function DashboardLayout() {
         </header>
 
         {/* Page Main Content Body */}
-        <main className="flex-1 p-6 overflow-y-auto no-scrollbar">
+        <main className="min-w-0 flex-1 overflow-y-auto p-4 no-scrollbar md:p-6">
           {renderActivePageContent()}
         </main>
       </div>

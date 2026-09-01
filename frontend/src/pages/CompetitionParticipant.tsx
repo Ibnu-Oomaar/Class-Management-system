@@ -335,7 +335,7 @@ export default function CompetitionParticipantPage() {
               >
 
                 {/* Competition + Student */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
                   {/* Competition */}
                   <div className="space-y-2">
@@ -422,7 +422,7 @@ export default function CompetitionParticipantPage() {
                 </div>
 
                 {/* Position + Points */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
                   <div className="space-y-2">
                     <Label className="text-xs font-semibold text-zinc-300">
@@ -787,7 +787,7 @@ export default function CompetitionParticipantPage() {
           >
 
             {/* Competition + Student */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
               {/* Competition */}
               <div className="space-y-2">
@@ -882,7 +882,7 @@ export default function CompetitionParticipantPage() {
             </div>
 
             {/* Position + Points */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
               <div className="space-y-2">
 

@@ -1,5 +1,12 @@
 # React + TypeScript + Vite
 
+## Deployment
+
+Set `VITE_API_URL` in the frontend `.env` file and deployment environment to
+the public HTTPS URL of the deployed backend, including `/api`. Vite injects
+this value during the build, so changing it requires a new deployment. Local
+development uses `http://localhost:5030/api`.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

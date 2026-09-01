@@ -433,7 +433,7 @@ export default function ClassImpactPage() {
               className="mt-2 space-y-4"
             >
               {/* Student + Points */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label className="text-xs font-semibold text-zinc-300">
                     Select Student
@@ -517,7 +517,7 @@ export default function ClassImpactPage() {
               </div>
 
               {/* Type + Date */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label className="text-xs font-semibold text-zinc-300">
                     Impact Type
@@ -924,7 +924,7 @@ export default function ClassImpactPage() {
               className="mt-2 space-y-4"
             >
               {/* Student + Points */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label className="text-xs font-semibold text-zinc-300">
                     Select Student
@@ -1007,7 +1007,7 @@ export default function ClassImpactPage() {
               </div>
 
               {/* Type + Date */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label className="text-xs font-semibold text-zinc-300">
                     Impact Type

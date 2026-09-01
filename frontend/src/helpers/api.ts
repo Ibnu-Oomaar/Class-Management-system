@@ -5,8 +5,11 @@ import type { InternalAxiosRequestConfig } from "axios";
 // API BASE URL
 // ============================================================
 
+const configuredApiUrl = import.meta.env.VITE_API_URL?.trim();
+
 const API_URL =
-  import.meta.env.VITE_API_URL ?? "http://localhost:5030/api";
+  configuredApiUrl ||
+  (import.meta.env.PROD ? "/api" : "http://localhost:5030/api");
 
 // ============================================================
 // AXIOS INSTANCE
