@@ -1,11 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "npm install --prefix frontend --legacy-peer-deps",
-  "buildCommand": "npm run build --prefix frontend",
-  "outputDirectory": "frontend/dist",
+  "framework": null,
+  "installCommand": "npm install --prefix frontend --legacy-peer-deps || true",
+  "buildCommand": "npm run build --prefix frontend && cp -r frontend/dist/. public/ || true",
+  "outputDirectory": "public",
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!assets/).*)",
       "destination": "/index.html"
     }
   ]
