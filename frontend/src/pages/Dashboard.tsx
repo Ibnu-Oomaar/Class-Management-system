@@ -22,6 +22,9 @@ import {
   Clock,
 } from "lucide-react";
 
+import { useNavigate } from "react-router-dom";
+
+
 import { Button } from "../components/ui/button";
 import { Card } from "../components/ui/card";
 import { Avatar, AvatarFallback } from "../components/ui/avatar";
@@ -44,6 +47,7 @@ import DisciplineCasePage from "./DisciplineCase";
 import ClassImpactPage from "./ClassImpact";
 import CompetitionPage from "./Competition";
 import CompetitionParticipantPage from "./CompetitionParticipant";
+import { toast } from "sonner";
 
 const navItems = [
   { id: "Overview", label: "Overview", icon: LayoutDashboard },
@@ -77,7 +81,12 @@ export default function DashboardLayout() {
   const user = useStudentStore((state) => state.user);
   const logout = useStudentStore((state) => state.logout);
   const [activeTab, setActiveTab] = useState("Overview");
+  const navigate = useNavigate();
 
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
   // Fetch real backend data for Dashboard metrics & lists
   const studentsQuery = useStudents(1, 100);
   const leadersQuery = useClassLeaders(1, 100);
@@ -537,16 +546,26 @@ export default function DashboardLayout() {
         <div className="mx-3.5 h-px bg-zinc-800/80" />
 
         {/* Sidebar Footer Sign Out */}
-        <div className="p-3.5">
-          <Button
-            variant="ghost"
-            onClick={logout}
-            className="w-full justify-start text-xs font-semibold text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 rounded-lg h-9"
-          >
-            <LogOut className="mr-2 h-4 w-4" />
-            Sign Out
-          </Button>
-        </div>
+        <Button
+  variant="ghost"
+  onClick={() => {
+    const confirmed = toast.warning(
+      "Are you sure you want to sign out?"
+    );
+
+    if (confirmed) {
+      logout();
+      navigate("/login", {
+        replace: true,
+      });
+    }
+  }}
+  className="w-full justify-start text-xs font-semibold text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 rounded-lg h-9"
+>
+  <LogOut className="mr-2 h-4 w-4" />
+  Sign Out
+</Button>
+
       </aside>
 
       {/* Main Workspace Area */}

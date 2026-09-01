@@ -1,22 +1,55 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "../components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
+
 import { useLoginStudent } from "../hooks/UseStudent";
 import useStudentStore from "../Stores/StudentStores";
 
 function LoginPage() {
   const [studentCode, setStudentCode] = useState("");
+
+  const navigate = useNavigate();
+
   const loginMutation = useLoginStudent();
+
   const setSession = useStudentStore((state) => state.setSession);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    loginMutation.mutate(studentCode.trim(), {
+    const code = studentCode.trim();
+
+    if (!code) {
+      return;
+    }
+
+    loginMutation.mutate(code, {
       onSuccess: (response) => {
-        const { student, access_token, refresh_token } = response.data;
-        setSession(student, access_token, refresh_token);
+        const {
+          student,
+          access_token,
+          refresh_token,
+        } = response.data;
+
+        // Save login session
+        setSession(
+          student,
+          access_token,
+          refresh_token
+        );
+
+        // Go to dashboard after successful login
+        navigate("/dashboard", {
+          replace: true,
+        });
       },
     });
   };
@@ -28,24 +61,49 @@ function LoginPage() {
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[hsl(var(--brand))]/10 text-2xl font-black text-[hsl(var(--brand))]">
             3C
           </div>
-          <CardTitle className="text-2xl">Class 3C Portal</CardTitle>
-          <CardDescription>Sign in with your student code to continue.</CardDescription>
+
+          <CardTitle className="text-2xl">
+            Class 3C Portal
+          </CardTitle>
+
+          <CardDescription>
+            Sign in with your student code to continue.
+          </CardDescription>
         </CardHeader>
+
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-4"
+          >
             <div className="space-y-2">
-              <label className="text-sm font-medium text-[hsl(var(--muted-foreground))]">Student code</label>
+              <label className="text-sm font-medium text-[hsl(var(--muted-foreground))]">
+                Student code
+              </label>
+
               <input
                 type="text"
                 value={studentCode}
-                onChange={(event) => setStudentCode(event.target.value)}
+                onChange={(event) =>
+                  setStudentCode(event.target.value)
+                }
                 placeholder="Enter your code"
-                className="w-full rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--background))] px-3 py-2.5 text-sm outline-none ring-0"
+                autoComplete="username"
+                className="w-full rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--background))] px-3 py-2.5 text-sm outline-none transition focus:border-[hsl(var(--brand))] focus:ring-2 focus:ring-[hsl(var(--brand))]/20"
               />
             </div>
 
-            <Button type="submit" className="w-full" disabled={loginMutation.isPending}>
-              {loginMutation.isPending ? "Signing in..." : "Login"}
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={
+                loginMutation.isPending ||
+                !studentCode.trim()
+              }
+            >
+              {loginMutation.isPending
+                ? "Signing in..."
+                : "Login"}
             </Button>
 
             {loginMutation.isError && (
@@ -56,6 +114,16 @@ function LoginPage() {
               </div>
             )}
           </form>
+
+          <div className="mt-6 text-center">
+            <button
+              type="button"
+              onClick={() => navigate("/")}
+              className="text-sm text-[hsl(var(--muted-foreground))] transition hover:text-[hsl(var(--brand))]"
+            >
+              ← Back to home
+            </button>
+          </div>
         </CardContent>
       </Card>
     </div>
