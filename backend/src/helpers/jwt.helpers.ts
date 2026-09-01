@@ -1,7 +1,7 @@
 import jwt, { SignOptions } from "jsonwebtoken";
 import type { StringValue } from "ms";
 
-import { Role } from "../../generated/prisma/enums";
+import { Role } from "../../generated/prisma";
 
 // ============================================================
 // ENV

@@ -7,7 +7,7 @@ import {
   deleteCompetition,
   restoreCompetition,
 } from "../controllers/competition.controller";
-import { Role } from "../../generated/prisma/enums";
+import { Role } from "../../generated/prisma";
 import { authenticate } from "../middlewares/auth.middleware";
 import { security } from "../middlewares/security.middleware";
 import { authorize } from "../middlewares/authorize.middleware";

@@ -5,7 +5,7 @@ import { prisma } from "../helpers/prisma";
 import {
   StudentStatus,
   Role,
-} from "../../generated/prisma/enums";
+} from "../../generated/prisma";
 
 import {
   createAccessToken,
