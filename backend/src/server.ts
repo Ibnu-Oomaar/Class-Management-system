@@ -29,7 +29,9 @@ app.use("/api/class-impacts", classImpactRoutes);
 app.use("/api/disciplines", disciplineRoutes);
 app.use("/api/class-leaders", classLeaderRoutes);
 
-const port = Number(process.env.PORT ?? 5030);
+export default app;
 
-
-app.listen(port, () => console.log(`server is listening on port ${port}`));
+if (process.env.VERCEL !== "1") {
+	const port = Number(process.env.PORT ?? 5030);
+	app.listen(port, () => console.log(`server is listening on port ${port}`));
+}

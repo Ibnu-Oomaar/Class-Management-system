@@ -6,9 +6,17 @@ import type { InternalAxiosRequestConfig } from "axios";
 // ============================================================
 
 const configuredApiUrl = import.meta.env.VITE_API_URL?.trim();
+const isLocalApiUrl = configuredApiUrl
+  ? /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?(\/|$)/i.test(
+      configuredApiUrl
+    )
+  : false;
 
 const API_URL =
-  configuredApiUrl ||
+  (configuredApiUrl &&
+  !(import.meta.env.PROD && isLocalApiUrl)
+    ? configuredApiUrl
+    : undefined) ||
   (import.meta.env.PROD ? "/api" : "http://localhost:5030/api");
 
 // ============================================================
