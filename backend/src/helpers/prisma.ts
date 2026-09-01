@@ -2,7 +2,7 @@ import path from "path";
 import dotenv from "dotenv";
 import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "../../generated/prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 dotenv.config();
 dotenv.config({ path: path.resolve(process.cwd(), "backend/.env") });

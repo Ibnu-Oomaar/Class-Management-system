@@ -4,11 +4,7 @@
   "installCommand": "npm install --legacy-peer-deps --force && npm install --prefix frontend --legacy-peer-deps --force && npm install --prefix backend --legacy-peer-deps --force && npm run build --prefix backend",
   "buildCommand": "npm run build --prefix backend && npm run build --prefix frontend && cp -r frontend/dist/. public/",
   "outputDirectory": "public",
-  "functions": {
-    "api/index.ts": {
-      "includeFiles": "backend/generated/prisma/**"
-    }
-  },
+
   "rewrites": [
     {
       "source": "/api/(.*)",

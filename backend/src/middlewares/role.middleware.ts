@@ -1,5 +1,5 @@
 import { NextFunction, Response } from "express";
-import { Role } from "../../generated/prisma";
+import { Role } from "@prisma/client";
 import { AuthenticatedRequest } from "./auth.middleware";
 
 export const requireRole = (

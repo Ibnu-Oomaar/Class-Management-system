@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { prisma } from "../helpers/prisma";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
-import { Role } from "../../generated/prisma/enums";
+import { Role } from "@prisma/client";
 
 const isValidId = (id: number): boolean =>
   Number.isInteger(id) && id > 0;

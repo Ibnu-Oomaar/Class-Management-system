@@ -5,7 +5,7 @@ import {
   DisciplineAction,
   DisciplineSeverity,
   Role,
-} from "../../generated/prisma/enums";
+} from "@prisma/client";
 
 const isValidId = (id: number): boolean =>
   Number.isInteger(id) && id > 0;
