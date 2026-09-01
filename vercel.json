@@ -6,11 +6,11 @@
   "outputDirectory": "public",
   "rewrites": [
     {
-      "source": "/api/:path*",
+      "source": "/api/(.*)",
       "destination": "/api"
     },
     {
-      "source": "/((?!assets/).*)",
+      "source": "/((?!api/|assets/|favicon).*)",
       "destination": "/index.html"
     }
   ]
